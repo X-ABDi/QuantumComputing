@@ -11,12 +11,18 @@ def probability_getter(desired_state, ans):
     return for_plot
 
 def plot_trans(prob_dict):
-    df = pd.DataFrame(list(prob_dict.items()), columns=['Time', 'Probability'])
-    df['Probability'] = df['Probability'].apply(lambda x: x.flatten().tolist() if isinstance(x, np.array) else x)
-    sns.lineplot(x='Time', y='Probability', data=df)
+    
+    x = list(prob_dict.keys())
+    y = list(prob_dict.values())
+
+    plt.figure(figsize =(100, 100))
+    plt.plot(x, y, marker='o')
+    plt.title('Plot of Dictionary with Float Keys and Values')
     plt.xlabel('Time')
     plt.ylabel('Probability')
-    plt.title('Transition Probability over Time')
+    plt.grid(True)
+
+    # Show the plot
     plt.show()
     
 def main():
@@ -26,13 +32,13 @@ def main():
     hamiltonian = np.array([[0, E0, 0], [E0, 0, E0], [0, E0, 0]])
     step_t = 0.01 
     ans = dict()
-    for el in range (0, 1000):
+    for el in range (0, 100):
         ans[float(el)/100] = initial_state + (step_t/complex(0, 1))*(np.dot(hamiltonian, initial_state))
         # print(ans[float(el)/100])
         initial_state = ans[float(el)/100]
     desired_state = np.array([0, 1, 0])
     prob_dict = probability_getter(desired_state, ans)    
-    # plot_trans(prob_dict)   
+    plot_trans(prob_dict)   
     # print(prob_dict)
 
 main ()
