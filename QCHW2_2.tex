@@ -1,0 +1,38 @@
+\documentclass[fleqn]{article}
+\usepackage{amsmath}
+
+\setlength{\mathindent}{0em}
+
+\begin{document}
+
+\title{Quadratic modeling for "Directed Feedback Node Set" problem}
+\author{Fateme Abdi}
+\date{March 24, 2025}
+\maketitle
+
+For any integer t less than given k, we are able to eliminate t numbers of nodes in our directed graph to derive another directed graph without cycle.
+So we need to declare bunch of variables.
+Here is an array of acceptable ts, we name it k:
+$$
+k = [1, 2, 3, ... , k]
+$$
+And $x_i$ represents our nodes. if $x_i = 0$ that node has been selected to be deleted. and otherwise $x_i = 1$ is a servivor node.
+There is a matrice E for primary graph representing edges. for every $e_{i,j}$ in matrice E if $e_{i,j} = 1$ it means node i is directed to node j.
+
+The function below makes charges for eliminated node number beeing more than k:
+\begin{equation}
+k - \sum_{i=1}^{n} 1-x_i
+\end{equation}
+
+And for every cycle of length L we have the cost functions represented as shown:
+\begin{align}
+L&=3 \\
+&\sum_{l=1}^{n}\sum_{m=1}^{n}\sum_{p=1}^{n} e_{l,m}e_{m,p}e_{l,p}(x_l*x_m+x_m*x_p+x_p*x_l)  \\
+L&=4 \\
+&\sum_{l=1}^{n}\sum_{m=1}^{n}\sum_{p=1}^{n}\sum_{q=1}^{n} e_{l,m}e_{m,p}e_{p,q}e_{q,l}(x_l *x_m +x_m * x_p +x_p *x_q +x_q *x_l) \\
+&\vdots \\
+L&=n-k \\ 
+&\sum_{l=1}^{n}\sum_{m=1}^{n} \cdots \sum_{p=1}^{n} e_{l,m} \cdots e_{p,l}(x_l*x_m+ \cdots + x_p*x_l)
+\end{align}
+
+\end{document}
