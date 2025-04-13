@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\title{Quadratic Modeling for 3-SAT Problem}
+\author{Fateme Abdi}
+\maketitle
+
+We assume that our function f(x) is a product of n sets, each set being the sum of 3 elements of our primary set:
+\begin{equation}
+f(x) = \prod_{i=1}^{n} s_i
+\end{equation}
+where
+\begin{equation}
+s_i = \sum_{j=1}^{3} a_j.
+\end{equation}
+
+For our model, we declare a variable $ x_i $. If $ x_i = 0 $, it means we are using the variable $ a_i $ itself; but if $ x_i = 1 $, it means we are using the variable $ \overline{a_i} $.
+we assume the number of $x_i$s to be m.
+
+There is another variable we might want to declare as $ y_{i,j} $, where $ y_{i,j} = 1 $ if variable $ a_i $ or $ \overline{a_i} $ exists in the j-th term; logically, if it does not, $ y_{i,j} = 0 $.
+
+Also, the main variable taking random values due to quantum operations is $ z_{i,j} $. We have $ 3n $ of them taking values according to the Ising model: $ 1 $ if $ a_i $ or $ \overline{a_i} $ is  1  in the j-th term, and  -1  if it is  0 .
+
+So for every term, we have three combinations:
+\begin{align}
+-1, -1, -1 & \equiv 0, 0, 0 \\
+-1, 1, -1 & \equiv 0, 1, 0 \\
+1, -1, 1 & \equiv 1, 0, 1 \\
+1, 1, 1 & \equiv 1, 1, 1.
+\end{align}
+
+The first function we are trying to build is to charge the total cost if any term has its three variables taking boolean value  0 :
+\begin{equation}
+\sum_{i=1}^{n} \left( \left( \sum_{j=1}^{3} z_{i,j} \right)^2 - 3 \left\lfloor \frac{\sum_{j=1}^{3} z_{i,j}}{3} \right\rfloor \right).
+\end{equation}
+the second part of our function checks whether our $x_i$ takes the same value in every term or not. if not costs more.
+\begin{equation}
+-\sum_{k=1}^{m}(\sum_{i=1}^{k}\sum_{j=1}^{n}((y_{k,j}-2*x_k)*z_{i,j}))^2
+\end{equation}
+the overall equation is:
+\begin{equation}
+A\sum_{i=1}^{n} \left( \left( \sum_{j=1}^{3} z_{i,j} \right)^2 - 3 \left\lfloor \frac{\sum_{j=1}^{3} z_{i,j}}{3} \right\rfloor \right) - B\sum_{k=1}^{m} \left( \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{k,j} - 2x_k) z_{i,j} \right)^2 
+\end{equation}
+
+
+\end{document}
